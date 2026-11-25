@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Waste Bin IoT Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js" defer></script>
+  <script src="ui.js" defer></script>
+  <script src="mqtt-client.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="title-group">
+        <h1>Smart Waste Bin Monitoring</h1>
+        <p>Broker: <code>broker.hivemq.com</code> | Topik: <code id="topicLabel">iot/smartbin/status/farrel25</code></p>
+      </div>
+      <div class="connection-badge">
+        <span id="connDot" class="dot"></span>
+        <span id="connText">Menghubungkan...</span>
+      </div>
+    </header>
+
+    <div id="alertBanner" class="alert-banner">
+       PERINGATAN: Kapasitas tempat sampah telah mencapai batas penuh (≥ 85%). Tutup dikunci otomatis!
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div>
+          <div class="card-label">Kapasitas Terisi</div>
+          <div class="card-value" id="capacityValue">0%</div>
+        </div>
+        <div>
+          <div class="progress-wrapper">
+            <div id="capacityBar" class="progress-fill"></div>
+          </div>
+          <p class="card-subtext">Batas penuh otomatis: 85%</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div>
+          <div class="card-label">Status Tempat Sampah</div>
+          <div id="binStatusBadge" class="status-pill status-ok">MENUNGGU DATA</div>
+        </div>
+        <p id="binStatusDesc" class="card-subtext">Menunggu telemetri pertama dari ESP32 Wokwi...</p>
+      </div>
+
+      <div class="card">
+        <div>
+          <div class="card-label">Status Tutup Otomatis</div>
+          <div id="lidStatusBadge" class="status-pill status-closed">TERTUTUP</div>
+        </div>
+        <p class="card-subtext">Aktuator Servo SG90 (0° Tertutup / 90° Terbuka)</p>
+      </div>
+    </div>
+
+    <div class="log-card">
+      <div class="log-header">
+        <span class="card-label" style="margin-bottom: 0;">Log Telemetri MQTT (JSON)</span>
+        <span id="lastUpdate" class="card-subtext" style="margin-top: 0;">Belum ada pembaruan</span>
+      </div>
+      <div id="logBox" class="log-box">
+        <div class="log-entry">Menunggu koneksi ke broker MQTT via WebSockets...</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
